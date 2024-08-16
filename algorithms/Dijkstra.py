@@ -81,44 +81,44 @@ def get_shortest_path_city(hash_table, start_vertex, end_vertex):
     path = "Salt Lake City " + path
     return path
 
-'''
-# Dijkstra's Shortest Path main
-# Program to find shortest paths from vertex A.
-g = Graph()
+def dijkstraAlgShortestPath():  #todo
+    # Dijkstra's Shortest Path main
+    # Program to find shortest paths from vertex A.
+    g = Graph()
 
-#add Vertices
-vertex_1 = Vertex("1")
-g.add_vertex(vertex_1)
-vertex_2 = Vertex("2")
-g.add_vertex(vertex_2)
-vertex_3 = Vertex("3")
-g.add_vertex(vertex_3)
-vertex_4 = Vertex("4")
-g.add_vertex(vertex_4)
-# etc.
+    #add Vertices
+    vertex_1 = Vertex("1")
+    g.add_vertex(vertex_1)
+    vertex_2 = Vertex("2")
+    g.add_vertex(vertex_2)
+    vertex_3 = Vertex("3")
+    g.add_vertex(vertex_3)
+    vertex_4 = Vertex("4")
+    g.add_vertex(vertex_4)
+    # etc.
 
-# add Edges
-g.add_undirected_edge(vertex_1, vertex_2, 484)
-g.add_undirected_edge(vertex_3, vertex_4, 626)
-# etc.
+    # add Edges
+    g.add_undirected_edge(vertex_1, vertex_2, 484)
+    g.add_undirected_edge(vertex_3, vertex_4, 626)
+    # etc.
 
-# Run Dijkstra's algorithm first.
-dijkstra_shortest_path(g, vertex_1)
+    # Run Dijkstra's algorithm first.
+    dijkstra_shortest_path(g, vertex_1)
 
-# Get the vertices by the label for convenience; display shortest path for each vertex
-# From vertex_1
-print("/nDijkstra's Shortest Path:")
-for v in g.adjacency_list:
-    if v.pred_vertex is None and v is not vertex_1:
-        print(f"1 to {v.label} ==> no path exists")
-    else:
-        print(f"1 to {v.label} ==> {get_shortest_path(vertex_1, v)} (total distance: {v.distance})")
+    # Get the vertices by the label for convenience; display shortest path for each vertex
+    # From vertex_1
+    print("\nDijkstra's Shortest Path:")
+    for v in g.adjacency_list:
+        if v.pred_vertex is None and v is not vertex_1:
+            print(f"1 to {v.label} ==> no path exists")
+        else:
+            print(f"1 to {v.label} ==> {get_shortest_path(vertex_1, v)} (total distance: {v.distance})")
 
-print("/nDijkstra's Shortest Path with Cities:")
-for v in g.adjacency_list:
-myPkgObj = hash_table.search(int(v.label))
-if v.pred_vertex is None and v is not vertex_1:
-    print(f"Salt Lake City to {myPkgObj.city} ==> no path exists")
-    else:
-    print(f"Salt Lake City to {myPkgObj.city} ==> {get_shortest_path_city(vertex_1, v)} (total distance: {v.distance})")
-'''
+    print("\nDijkstra's Shortest Path with Cities:")
+    for v in g.adjacency_list:
+        myPkgObj = hash_table.search(int(v.label))  #fixme
+        if v.pred_vertex is None and v is not vertex_1:
+            print(f"Salt Lake City to {myPkgObj.city} ==> no path exists")
+        else:
+            print(f"Salt Lake City to {myPkgObj.city} ==> {get_shortest_path_city(vertex_1, v)} (total distance: {v.distance})")
+

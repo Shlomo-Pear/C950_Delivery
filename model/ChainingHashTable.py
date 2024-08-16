@@ -73,31 +73,7 @@ class ChainingHashTable:
             if kv[0] == key:
                 bucket_list.remove([kv[0], kv[1]])
 
-    # Ref: WGU Webinar: Getting Greedy, who moved my data?; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=eee77a88-4de8-4d42-a3c3-ac8000ece256
-    # Loads the package data from a file into a hash table
-    def loadPackageData(self, fileName):
-        with open(fileName) as packageFile:
-            packageData = csv.reader(packageFile, delimeter=',')
-            next(packageData) # skips header
-            for package in packageData:
-                pID = int(package[0])
-                pAddress = package[1]
-                pCity = package[2]
-                pState = package[3]
-                pZCode = package[4]
-                pDeadline = package[5]
-                pWeight = package[6]
-                pNotes = package[7]
-
-                # Package object
-                package = Package(pID, pAddress, pCity, pState, pZCode, pDeadline, pWeight, pNotes)
-                # print(package)
-
-                # insert it into the hash table
-                self.insert(pID, package)
-
-'''
-# Fetch data from hash table
-for i in range(len(hashTable.table)+1):
-    print(f"Key: {i+1} and Package: {hashTable.search(i+1)}")
-'''
+    # Fetch data from hash table
+    def getPackageData(self):
+        for i in range(len(self.table) + 1):
+            print(f"Key: {i + 1} and Package: {self.search(i + 1)}")

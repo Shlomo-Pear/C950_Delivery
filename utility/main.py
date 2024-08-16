@@ -15,7 +15,63 @@ on the same truck.
 ● Packages #3, #18, #36, and #38 may only be delivered by truck 2.
 ● #6, #25, #28, #32 cannot leave the hub before 9:05 a.m.
 
+Always print out ALL attributes of the package:  ID, full address, deadline, delivery time, truck #
+
+
+For the user interface, three (3) interface options are required:
+
+1)   List the status of all packages.  When printing package status, show all attributes of the package class and the
+truck that the package was assigned to.
+
+2)   Request a specific package id and a time to show the status of the package at that time
+
+3)   List the status of all packages – at a specific time
+
+
+
+Suggestion: Code must be written to handle the use case where the user inputs a time that is earlier than the original
+delivery of the package.  If this occurs, the package delivery would not be known and should be blank.   Additionally,
+any arrival/address changes times must also be respected.  If you are unsure how to proceed, schedule an appointment
+with a C950 Instructor.
+
 datetime class use timedelta google it
 
 '''
 import csv
+from datetime import time, timedelta
+
+from utility.Status import *
+
+# Ref: WGU Webinar: Python Modules; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=a6e33b6d-9753-4ba4-a1b6-ac8000f5d250
+if __name__ == '__main__':
+    print("Welcome Message")  #todo
+
+    # todo Delivery.py methods go here
+
+    # Loop until user is satisfied
+    isExit = True
+    while isExit:
+        print("\nOptions:")
+        print("1. Get the Status for all Packages")
+        print("2. Get the Status for Package \'x\' (ID) at \'x\' Time (ex. format example)")  #todo format example
+        print("3. Get the status of all Packages at \'x\' Time (ex. format example)") #todo format example
+        print("4. Exit the Program")
+        option = input("Choose an option(1, 2, 3, or 4): ")
+        if option == "1":
+            getAllPkgStatus()
+
+        elif option == "2":
+            pID = int(input("Enter the ID of the package you want to know the status of (ex. 17): "))
+            pTime = timedelta(input(f"For the status of package {pID}, please enter the time that you want to know" +
+                                   " it's status: (ex. ): ")) #todo format example
+            getSinglePkgAtTime(pID, pTime)
+
+        elif option == "3":
+            pTime = time(input("Enter the time you want to know the status of for all packages: (ex. ): ")) #todo format example
+            getTimeStatusAllPkgs(pTime)
+
+        elif option == "4":
+            isExit = False
+
+        else:
+            print(f"Sorry, \"{option}\" is not a valid option. Please enter a valid option (1, 2, 3, or 4).")
