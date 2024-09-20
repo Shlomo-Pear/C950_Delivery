@@ -40,13 +40,25 @@ datetime class use timedelta google it
 import csv
 from datetime import time, timedelta
 
+from model.Package import loadPackageData
 from utility.Status import *
+from utility.DistanceMethods import *
+
 
 # Ref: WGU Webinar: Python Modules; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=a6e33b6d-9753-4ba4-a1b6-ac8000f5d250
 if __name__ == '__main__':
     print("Welcome Message")  #todo
 
+    hashtable = ChainingHashTable()
+    loadPackageData("../resource/WGUPS Package File.csv", hashtable) #fixme
+    # hashtable.getPackageData()
     # todo Delivery.py methods go here
+
+    # Distance data
+    distanceList = loadDistanceData("../resource/WGUPS Distance Table.csv")
+
+    # Address data
+    addressList = loadAddressData("../resource/WGUPS Address File.csv")
 
     # Loop until user is satisfied
     isExit = True
@@ -68,7 +80,7 @@ if __name__ == '__main__':
 
         elif option == "3":
             pTime = time(input("Enter the time you want to know the status of for all packages: (ex. ): ")) #todo format example
-            getTimeStatusAllPkgs(pTime)
+            #getTimeStatusAllPkgs(pTime)
 
         elif option == "4":
             isExit = False

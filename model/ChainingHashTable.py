@@ -75,5 +75,9 @@ class ChainingHashTable:
 
     # Fetch data from hash table
     def getPackageData(self):
-        for i in range(len(self.table) + 1):
-            print(f"Key: {i + 1} and Package: {self.search(i + 1)}")
+        count = 0
+        for i, bucket in enumerate(self.table):
+            for key, item in bucket:
+                print(f"Key: {key} and Package: {item}")
+                count += 1
+        print(f"Total count of packages is: {count}")
