@@ -1,0 +1,11 @@
+load package data into hash table
+loadDistanceData(fileName)
+loadAddressData(fileName)
+Dijkstra's algorithm
+
+I'm a student
+default to studying
+I'm a reader - study by reading
+I love the act of learning
+
+The subtle art of not giving an f*

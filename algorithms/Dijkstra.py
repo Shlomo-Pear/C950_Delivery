@@ -83,7 +83,7 @@ def get_shortest_path_city(hash_table, start_vertex, end_vertex):
 
 def dijkstraAlgShortestPath():  #todo
     # Dijkstra's Shortest Path main
-    # Program to find shortest paths from vertex A.
+    # Program to find the shortest paths from vertex A.
     g = Graph()
 
     #add Vertices
@@ -105,7 +105,7 @@ def dijkstraAlgShortestPath():  #todo
     # Run Dijkstra's algorithm first.
     dijkstra_shortest_path(g, vertex_1)
 
-    # Get the vertices by the label for convenience; display shortest path for each vertex
+    # Get the vertices by the label for convenience; display the shortest path for each vertex
     # From vertex_1
     print("\nDijkstra's Shortest Path:")
     for v in g.adjacency_list:
