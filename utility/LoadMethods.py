@@ -32,7 +32,7 @@ def loadPackageData(fileName, hashTable):
 
 
 """
-Loads 
+Loads distance data from a .csv file into a list object
 """
 # Ref: WGU Webinar: Getting Greedy, who moved my data?; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=eee77a88-4de8-4d42-a3c3-ac8000ece256
 # Loads the distance data from a file into 2D list
@@ -53,6 +53,9 @@ def loadDistanceData(fileName):
     return distanceArray
 
 
+"""
+Loads address data from a .csv file into a list object
+"""
 # Ref: WGU Webinar: Getting Greedy, who moved my data?; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=eee77a88-4de8-4d42-a3c3-ac8000ece256
 # Loads the address data from a file into list
 def loadAddressData(fileName):

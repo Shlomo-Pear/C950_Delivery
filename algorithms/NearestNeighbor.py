@@ -16,31 +16,38 @@ some packages are delayed, ...)
 
 
 """
-Finds the next closest package and returns it and the distance between the two.
+Finds the next closest package and returns the ID, address, and the distance between it and the truck.
 """
-def getClosestPackage(distanceData, addressList, truckPackages, startingAddress):
+def getClosestPackage(hashTable, distanceData, addressList, truckPackages, startingAddress):
 
+    count = 0
+    nextPackageID = -1
     minDistance = float('inf')
-    nextPackage = None
 
-    for package in truckPackages:
-        address2 = package.address
+    # Search the hash table for the package's address and get the distance between truck and package
+    for i in truckPackages:
+        count += 1
+        package = hashTable.search(i)
+        address2 = [package.address]
+        # print(f"{count})")
+        # print(f"Starting address: {startingAddress}")
+        # print(f"Address 2: {address2}")
+
         distance = distanceBetween(distanceData, addressList, startingAddress, address2)
 
         if distance < minDistance:
             minDistance = distance
-            nextPackage = package
+            nextPackageID = i
 
-    return nextPackage, minDistance
+    return nextPackageID, address2, minDistance
 
 
 """
 Returns the distance between two locations.
 """
 def distanceBetween(distanceData, addressList, address1, address2):
-    distance = 0
 
-    h = addressList.index(address1)
+    h = addressList.index(address1) + 1
     j = addressList.index(address2)
 
     # Mirror the addresses if there is no distance data for the vertex

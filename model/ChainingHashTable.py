@@ -59,6 +59,7 @@ class ChainingHashTable:
             # print(key_value)
             if key_value[0] == key:
                 return key_value[1]  # value
+        raise IndexError(f'ID \'{key}\' not found in database')
         return None
 
     # Removes an item with matching key from the hash table.
@@ -78,6 +79,6 @@ class ChainingHashTable:
         count = 0
         for i, bucket in enumerate(self.table):
             for key, item in bucket:
-                print(f"Key: {key} and Package: {item}")
+                print(f"Package: {item}")
                 count += 1
         print(f"Total count of packages is: {count}")

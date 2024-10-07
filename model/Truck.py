@@ -1,8 +1,11 @@
+from datetime import timedelta
+
+
 class Truck:
-    def __init__(self, ID, capacity=16, timeLeft="8:00"):
+    def __init__(self, ID, capacity=16):
         self.ID = ID
         self.capacity = capacity
         self.packages = []
-        self.timeLeft = timeLeft
+        self.timeLeftHub = timedelta()
+        self.timeAfterDelivery = timedelta()
         self.miles = 0.0
-

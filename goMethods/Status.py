@@ -33,49 +33,44 @@ any arrival/address changes times must also be respected. If you are unsure how 
 with a C950 Instructor.
 '''
 from datetime import time, timedelta
-from algorithms.Dijkstra import *
-from algorithms.Greedy import *
 from model.ChainingHashTable import *
 
-# List the status of all packages. When printing package status, show all attributes of the package class and the
-# truck that the package was assigned to.
-def getAllPkgStatus():
-    #todo add status info
 
-    '''
-    # Print out all packages
-    truckID = -1
-    for package in hashTable:
-        # Get ID for the truck the packages are in
-        if package in truck1:
-            truckID = truck.id
-        elif package in truck2:
-            truckID = truck.id
-        elif package in truck3:
-            truckID = truck.id
+"""
+List the status of all packages. When printing package status, show all attributes of the package class and the truck
+that the package was assigned to.
+"""
+def getAllPkgStatus(hashTable):
 
-        print(package + ", Truck #" + truckID)
+    hashTable.getPackageData()
+
+
+"""
+Request a specific package id and a time to show the status of the package at that time.
+"""
+def getSinglePkgAtTime(hashTable, pID, inputTime):
+    # todo
+    try:
         '''
+        pack = hashTable.search(pID)
+        status = ""
+    
+        # Checks to see if queried time is before delivered time
+        if time < pack.time:
+            status = "has yet to be"
+        else:
+            status = "has been"
+    
+        print(f"At time {time}, package #{pID} {status} delivered.")
+        '''
+    except IndexError as excpt:
+        print(f"\n{excpt}")
 
-# Request a specific package id and a time to show the status of the package at that time
-def getSinglePkgAtTime(pID, time):
-    #todo
-    '''
-    pack = hashTable.search(pID)
-    status = ""
-
-    # Checks to see if queried time is before delivered time
-    if time < pack.time:
-        status = "has yet to be"
-    else:
-        status = "has been"
-
-    print(f"At time {time}, package #{pID} {status} delivered.")
-'''
-
-# List the status of all packages – at a specific time
-'''def getTimeStatusAllPkgs(time):
-    #todo
+"""
+# List the status of all packages – at a specific time.
+"""
+def getTimeStatusAllPkgs(hashTable, inputTime):
+    # todo
     for package in hashTable:
         status = ""
-        if'''
+        #if
