@@ -20,6 +20,5 @@ class Package:
         self.deliveryTime = timedelta()
 
     def __str__(self):  # Overwrites print(Package). Otherwise, it will print out the object reference.
-        return (f"{self.ID}, {self.address}, {self.city}, {self.state}, {self.zCode}, Truck #{self.truckNum}, "
-                f"{self.deadline} deadline, Departed HUB At: {self.departureTime}, delivered: {self.deliveryTime}")
+        return f"{self.ID}, {self.address}, {self.city}, {self.state}, {self.zCode}, {self.deadline} deadline"
 

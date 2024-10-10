@@ -13,7 +13,7 @@ from goMethods.UI import *
 if __name__ == '__main__':
     print("WGU Mail Routing System")
 
-    hashTable, truckList = delivery()
+    hashTable, truckList, originalPackage = delivery()
 
     # Loop until user is satisfied
-    ui(hashTable, truckList)
+    ui(hashTable, truckList, originalPackage)

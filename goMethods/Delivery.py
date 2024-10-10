@@ -20,6 +20,7 @@ def delivery():
     # Initialize hashtable, distance list, and address list
     hashTable = ChainingHashTable()
     loadPackageData("../resource/WGUPS Package File.csv", hashTable)
+    originalPackage9 = hashTable.search(9)
     # hashTable.getPackageData()
 
     # Distance data
@@ -29,11 +30,11 @@ def delivery():
     addressList = loadAddressData("../resource/WGUPS Address File.csv")
     # print(addressList[0])
 
-    # ----------------------------------------------------------
-    # Initializes trucks and lists with package IDs and loads them onto the trucks
-
     # Test Check hashtable for all packages
     # hashTable.getPackageData()
+
+    # ----------------------------------------------------------
+    # Initializes trucks and lists with package IDs and loads them onto the trucks
 
     # Package IDs to load into trucks
     # Leaves at 8:00, Arrive by 10:30
@@ -106,13 +107,15 @@ def delivery():
     truckDeliverPackages(distanceList, addressList, truck2, hashTable)
     # ----------------------------------------------------------
 
-    print(f"\nTruck operating times:")
-    print(f"Truck 1: {truck1TLH1} - {truck1.timeAfterDelivery}")
-    print(f"Truck 3: {truck3TLH1} - {truck3.timeAfterDelivery}")
+    print("\n-----------------------------")
+    print(f"  Truck operating times:")
+    print(f"Truck 1: {truck1TLH1}  - {truck1.timeAfterDelivery}")
+    print(f"Truck 3: {truck3TLH1}  - {truck3.timeAfterDelivery}")
     print(f"Truck 2: {truck2.timeLeftHub} - {truck2.timeAfterDelivery}")
+    print("-----------------------------")
 
     truckList = [truck1, truck2, truck3]
-    return hashTable, truckList  # For UI
+    return hashTable, truckList, originalPackage9  # For UI
 
 
 """
@@ -140,6 +143,7 @@ def truckDeliverPackages(distanceList, addressList, truck, hashTable):
         truckTime = truck.timeAfterDelivery
         driveTime = getTravelTime(distanceToNext)
         deliveredAt = truckTime + driveTime
+        # ----
         truck.timeAfterDelivery = deliveredAt
 
         # Debug

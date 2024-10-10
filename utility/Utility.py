@@ -3,6 +3,7 @@ This module holds various utility methods.
 """
 from datetime import timedelta
 
+from utility.CorrectPackage9 import setPackage9Status
 
 """
 Iterates through an inputted list of indexes and returns a list of the corresponding objects found within a hash table.
@@ -17,7 +18,21 @@ def getItemsFromHashTable(hashTable, intList):
 
 
 """
+Returns the number of packages in the hash table.
+Used in UI.py.
+"""
+def getCountPackages(hashTable):
+    count = 0
+    for i in range(1, hashTable.count + 1):
+        count += 1
+
+    return count
+# ----------------------------------------------------------
+
+
+"""
 Returns the elapsed time for the distance driven.
+Used in NearestNeighbor.py.
 """
 def getTravelTime(distance):
 
@@ -33,6 +48,7 @@ def getTravelTime(distance):
 
 """
 Sets the departure time for a given truck based on another truck's end delivery time.
+Used in Delivery.py.
 """
 def setDepartureTime(currentTruck, previousTruck, potentialTime=timedelta()):
     # If the current time (previousTruck's finishing time) is before the potential departure time, wait until then for
@@ -48,7 +64,8 @@ def setDepartureTime(currentTruck, previousTruck, potentialTime=timedelta()):
 
 
 """
-Gets the milage for each truck and the total milage
+Gets the milage for each truck and the total milage.
+Used in Status.py.
 """
 def getTruckMiles(truckList):
 
@@ -64,3 +81,61 @@ def getTruckMiles(truckList):
     print(f"Total miles:   {totalMiles:.2f}")
     print("----------------------")
     # ----------------------------------------------------------
+
+
+"""
+Gets the status for 'x' package at 'x' time, it's departure time, delivery time, and truck number it was on. 
+
+Status may be UNKNOWN, EN ROUTE TO HUB, AT HUB, EN ROUTE, or DELIVERED.
+Used in Status.py.
+"""
+def getStatus(inputTime, package):
+
+    # list of IDs for late packages that arrive at the hub at 9:05
+    lateList = [6, 25, 28, 32]
+
+    # inputTime is before 8:00 for regular packages
+    time8 = timedelta(hours=8)
+    # inputTime is before 9:05 for late packages
+    time9o5 = timedelta(hours=9, minutes=5)
+
+    departureTime = "NA"
+    deliveryTime = "NA"
+    truckNum = "NA"
+    # ----------------------------------------------------------
+    # Compares the input time to package time details and assigns status
+
+    # inputTime is before 8:00
+    if inputTime < time8:
+        status = "UNKNOWN"
+
+    # Package arrived at the hub late
+    elif (package.ID in lateList) and (inputTime < time9o5):
+        status = "EN ROUTE TO HUB"
+
+    # inputTime is before package left the hub
+    elif inputTime < package.departureTime:
+        status = "AT HUB"
+
+    # inputTime is before the time the package was delivered
+    elif inputTime < package.deliveryTime:
+        status = "EN ROUTE"
+        departureTime = f"{package.departureTime}"
+        truckNum = f"{package.truckNum}"
+
+    # inputTime is after the time the package was delivered
+    else:
+        status = "DELIVERED"
+        departureTime = f"{package.departureTime}"
+        deliveryTime = f"{package.deliveryTime}"
+        truckNum = f"{package.truckNum}"
+
+    # Package 9 has the original address
+    if package.ID == 9 and package.address == "300 State St":
+        status = setPackage9Status(inputTime)
+        departureTime = "NA"
+        deliveryTime = "NA"
+        truckNum = "NA"
+    # ----------------------------------------------------------
+
+    return status, departureTime, deliveryTime, truckNum

@@ -14,9 +14,10 @@ truck that the package was assigned to.
 """
 from goMethods.Status import *
 from datetime import datetime
+from utility.Utility import getCountPackages
 
 
-def ui(hashTable, truckList):
+def ui(hashTable, truckList, originalPackage=None):
 
     # Loop until user is satisfied
     isExit = True
@@ -25,16 +26,18 @@ def ui(hashTable, truckList):
         # Gets the number of packages in the hash table
         numPackages = getCountPackages(hashTable)
         # ----------------------------------------------------------
+
         print("\nOptions:")
-        print("1. Get truck milage and the Details for all Packages")
-        print("2. Get the status of all Packages at \'x\' Time (ex. \"14:35\")")
-        print("3. Get the Status for Package \'x\' (ID) at \'x\' Time (ex. \"14:35\")")
+        print("1. Get Truck Milage and the Details for All Packages")
+        print("2. Get the Status of All Packages At \'X\' Time (ex. \"14:35\")")
+        print("3. Get the Status for Package \'X\' (ID) at \'X\' Time (ex. \"14:35\")")
         print("4. Exit the Program")
         option = input("Choose an option (1, 2, 3, or 4): ")
         # ----------------------------------------------------------
+
         # Gets the details for all packages
         if option == "1":
-            getAllPkgStatus(hashTable, truckList)
+            getAllPkgDetails(hashTable, truckList, originalPackage)
         # ----------------------------------------------------------
 
         # Gets the statuses and details for all packages at 'x' time
@@ -49,7 +52,7 @@ def ui(hashTable, truckList):
                 print(f"\nSorry, \"{userTime}\" is not a valid time (00:00 - 23:59) (ex. \"14:35\")")
                 continue
 
-            getTimeStatusAllPkgs(hashTable, toTime)
+            getTimeStatusAllPkgs(hashTable, toTime, originalPackage)
         # ----------------------------------------------------------
 
         # Gets the status and details for 'x' package at 'x' time
@@ -77,12 +80,12 @@ def ui(hashTable, truckList):
                 continue
 
             # Get result
-            getSinglePkgAtTime(hashTable, pID, toTime)
+            getSinglePkgAtTime(hashTable, pID, toTime, originalPackage)
         # ----------------------------------------------------------
 
         # Quit
         elif option == "4":
-            print("\nGoodbye! 😁")
+            print("\nGoodbye! (*^_^*)")
             isExit = False
         # ----------------------------------------------------------
 
@@ -92,12 +95,4 @@ def ui(hashTable, truckList):
 # ----------------------------------------------------------
 
 
-"""
-Returns the number of packages in the hash table
-"""
-def getCountPackages(hashTable):
-    count = 0
-    for i in range(1, hashTable.count + 1):
-        count += 1
 
-    return count
