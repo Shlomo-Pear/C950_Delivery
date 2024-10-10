@@ -1,11 +1,20 @@
-# Dijkstra's Shortest Path Algorithm
+"""
+Dijkstra's Shortest Path Algorithm
+
+Abandoned
+"""
+
+
 # Ref: WGU Webinar: How to Dijkstra?; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=aad71bd6-abf5-4cd4-8a78-ac7f01039c73
 class Vertex:
-    # Constructor for a new vertex object. All vertex objects start with a distance of positive infinity
+
+    # Constructor for a new vertex object. All vertex objects start with a distance of positive infinity.
     def __init__(self, label):
         self.label = label
         self.distance = float('inf')
         self.pred_vertex = None
+
+# ----------------------------------------------------------
 
 class Graph:
     def __init__(self):
@@ -24,7 +33,7 @@ class Graph:
         self.add_directed_edge(vertex_a, vertex_b, weight)
         self.add_directed_edge(vertex_b, vertex_a, weight)
 
-
+# ----------------------------------------------------------
 def dijkstra_shortest_path(g, start_vertex):
     # Put all vertices in an unvisited queue.
     unvisited_queue = []
@@ -58,6 +67,7 @@ def dijkstra_shortest_path(g, start_vertex):
                 adj_vertex.distance = alternative_path_distance
                 adj_vertex.pred_vertex = current_vertex
 
+# ----------------------------------------------------------
 
 def get_shortest_path(start_vertex, end_vertex):
     # Start from end_vertex and build the path backwards.
@@ -68,7 +78,7 @@ def get_shortest_path(start_vertex, end_vertex):
         current_vertex = current_vertex.pred_vertex
     path = start_vertex.label + path
     return path
-
+# ----------------------------------------------------------
 
 def get_shortest_path_city(hash_table, start_vertex, end_vertex):
     # Start from end_vertex and build the path backwards.
@@ -80,8 +90,9 @@ def get_shortest_path_city(hash_table, start_vertex, end_vertex):
         current_vertex = current_vertex.pred_vertex
     path = "Salt Lake City " + path
     return path
+# ----------------------------------------------------------
 
-def dijkstraAlgShortestPath():  #todo
+def dijkstraAlgShortestPath(hashTable):  #todo
     # Dijkstra's Shortest Path main
     # Program to find the shortest paths from vertex A.
     g = Graph()
@@ -116,7 +127,7 @@ def dijkstraAlgShortestPath():  #todo
 
     print("\nDijkstra's Shortest Path with Cities:")
     for v in g.adjacency_list:
-        myPkgObj = hash_table.search(int(v.label))  #fixme
+        myPkgObj = hashTable.search(int(v.label))
         if v.pred_vertex is None and v is not vertex_1:
             print(f"Salt Lake City to {myPkgObj.city} ==> no path exists")
         else:

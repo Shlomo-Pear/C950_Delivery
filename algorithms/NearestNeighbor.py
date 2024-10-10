@@ -1,25 +1,12 @@
-'''
-Algorithm to Load Packages:
-
-C.3) Function to load packages into Trucks:
-
-12-Define truckLoadPackages()
-
-13-Load Trucks based on assumptions provided (ex. Truck-2 must have some packages, some packages go together,
-some packages are delayed, ...)
-
-14-And closest addresses/packages until there is 16 packages in a Truck
-
-  i.e. Load manually/heuristically or Loop package addresses and call minDistanceFrom(fromAddress, truckPackages) for
-  all the addresses in the Truck not visited yet
-'''
-
+"""
+This is the nearest neighbor algorithm that finds the next closest package.
+"""
 
 """
 Finds the next closest package and returns the ID, address, and the distance between it and the truck.
 """
 def getClosestPackage(hashTable, distanceData, addressList, truckPackages, startingAddress):
-
+    # Initialize
     count = 0
     nextPackageID = -1
     minDistance = float('inf')
@@ -29,17 +16,24 @@ def getClosestPackage(hashTable, distanceData, addressList, truckPackages, start
         count += 1
         package = hashTable.search(i)
         address2 = [package.address]
+
+        # Print debug information
         # print(f"{count})")
-        # print(f"Starting address: {startingAddress}")
-        # print(f"Address 2: {address2}")
+        # print(f"Starting address: {startingAddress}, Address 2: {address2}")
+        # ----------------------------------------------------------
 
         distance = distanceBetween(distanceData, addressList, startingAddress, address2)
+        # print(f"Testing distance: {distance}")
 
+        # If the new distance is smaller, reassign variables
         if distance < minDistance:
             minDistance = distance
             nextPackageID = i
+            nextPackageAddress = address2
 
-    return nextPackageID, address2, minDistance
+    return nextPackageID, nextPackageAddress, minDistance
+
+# -----------------------------------------------------------------------------------------------------
 
 
 """
@@ -47,14 +41,41 @@ Returns the distance between two locations.
 """
 def distanceBetween(distanceData, addressList, address1, address2):
 
-    h = addressList.index(address1) + 1
+    # Assign h and j
+    # Skip Header if index is 0
+    h = addressList.index(address1)
+    if h == 0:
+        h += 1
+
     j = addressList.index(address2)
+    if j == 0:
+        j += 1
 
-    # Mirror the addresses if there is no distance data for the vertex
+    # Debug
+    # print(f"h index: {h}, j index: {j}")
+    # print(f"Distance between {address1} and {address2}: {distanceData[h][j]}")
+
+    # ----------------------------------------------------------
+    # Finds the distance value
+
+    # If addresses match or distance for vertex (un)mirrored is 0.0
+    if address1 == address2:
+        return 0.0
+    if distanceData[j][h] == '0.0' and distanceData[h][j] == '0.0':
+        return 0.0
+    # --------------------------------
+
+    # Mirror the addresses if there is no distance data for the vertex.
     if distanceData[h][j] == '':
-        distance = distanceData[j][h]
+        return float(distanceData[j][h])
+    if distanceData[j][h] == '':
+        return float(distanceData[h][j])
+    # --------------------------------
+
+    # Mirror the addresses if the distance is 0.0 and distance data exists for the mirror.
+    if distanceData[h][j] == '0.0' and distanceData[j][h] != '':
+        return float(distanceData[j][h])
+    if distanceData[j][h] == '0.0' and distanceData[h][j] != '':
+        return float(distanceData[h][j])
     else:
-        distance = distanceData[h][j]
-
-    return float(distance)
-
+        return float(distanceData[h][j])

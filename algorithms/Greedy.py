@@ -1,3 +1,9 @@
+"""
+Greedy algorithm
+
+Unused and unaltered
+"""
+
 # Greedy Algorithm: Min Expenses => Max Profits
 # Ref: WGU Webinar: Python Modules; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=a6e33b6d-9753-4ba4-a1b6-ac8000f5d250
 
