@@ -13,28 +13,35 @@ def getItemsFromHashTable(hashTable, intList):
         hashObject = hashTable.search(i)
         outList.append(hashObject)
     return outList
+# ----------------------------------------------------------
 
 
 """
 Returns the elapsed time for the distance driven.
 """
 def getTravelTime(distance):
+
     speed = 18
     atTime = float(distance / speed)
+
     hours = int(atTime)
     minutes = int((atTime - hours) * 60)
 
     return timedelta(hours=hours, minutes=minutes)
+# ----------------------------------------------------------
 
 
 """
 Sets the departure time for a given truck based on another truck's end delivery time.
 """
-def setDepartureTime(potentialTime, currentTruck, previousTruck):
-    # PreviousTruck's finishing time is before the potential departure time
+def setDepartureTime(currentTruck, previousTruck, potentialTime=timedelta()):
+    # If the current time (previousTruck's finishing time) is before the potential departure time, wait until then for
+    # the currentTruck to leave the hub. Otherwise, the currentTruck's departure time is whenever the previousTruck
+    # returned to hub.
+
     if previousTruck.timeAfterDelivery < potentialTime:
         currentTruck.timeLeftHub = potentialTime
     else:
         currentTruck.timeLeftHub = previousTruck.timeAfterDelivery
-
+    # Set the current time to the departure time
     currentTruck.timeAfterDelivery = currentTruck.timeLeftHub

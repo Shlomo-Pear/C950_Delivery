@@ -1,4 +1,7 @@
-import csv
+"""
+This is the package class. It holds the details of each package.
+"""
+
 from datetime import timedelta
 
 
@@ -16,8 +19,7 @@ class Package:
         self.departureTime = timedelta()
         self.deliveryTime = timedelta()
 
-
-    def __str__(self): # Overwrites print(Package). Otherwise, it will print out the object reference.
+    def __str__(self):  # Overwrites print(Package). Otherwise, it will print out the object reference.
         return (f"{self.ID}, {self.address}, {self.city}, {self.state}, {self.zCode}, Truck #{self.truckNum}, "
-                f"{self.deadline} deadline, delivered: {self.deliveryTime}")
+                f"{self.deadline} deadline, Departed HUB At: {self.departureTime}, delivered: {self.deliveryTime}")
 

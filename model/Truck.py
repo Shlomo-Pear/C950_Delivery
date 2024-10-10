@@ -1,3 +1,6 @@
+"""
+This is the truck class.
+"""
 from datetime import timedelta
 
 

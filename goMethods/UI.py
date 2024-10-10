@@ -1,64 +1,103 @@
 """
 This module holds the UI.
+
+
+For the user interface, three (3) interface options are required:
+
+1)   List the status of all packages.  When printing package status, show all attributes of the package class and the
+truck that the package was assigned to.
+
+2)   Request a specific package id and a time to show the status of the package at that time
+
+3)   List the status of all packages – at a specific time
+
 """
-from datetime import datetime
 from goMethods.Status import *
+from datetime import datetime
 
 
 def ui(hashTable):
+
     # Loop until user is satisfied
     isExit = True
     while isExit:
+
+        # Gets the number of packages in the hash table
+        numPackages = getCountPackages(hashTable)
+        # ----------------------------------------------------------
         print("\nOptions:")
-        print("1. Get the Status for all Packages")
-        print("2. Get the Status for Package \'x\' (ID) at \'x\' Time (ex. \"8:00\")")
-        print("3. Get the status of all Packages at \'x\' Time (ex. \"8:00\")")
+        print("1. Get the Details for all Packages")
+        print("2. Get the status of all Packages at \'x\' Time (ex. \"14:35\")")
+        print("3. Get the Status for Package \'x\' (ID) at \'x\' Time (ex. \"14:35\")")
         print("4. Exit the Program")
         option = input("Choose an option (1, 2, 3, or 4): ")
-
+        # ----------------------------------------------------------
+        # Gets the details for all packages
         if option == "1":
             getAllPkgStatus(hashTable)
+        # ----------------------------------------------------------
 
+        # Gets the statuses and details for all packages at 'x' time
         elif option == "2":
+            try:
+                userTime = input("Enter the time for when you want to know each package status: (00:00 - 23:59) "
+                                 "(ex. \"14:35\"): ")
+                pTime = datetime.strptime(userTime, "%H:%M")  # Exception is thrown here
+                toTime = timedelta(hours=pTime.hour, minutes=pTime.minute)
+
+            except ValueError:
+                print(f"\nSorry, \"{userTime}\" is not a valid time (00:00 - 23:59) (ex. \"14:35\")")
+                continue
+
+            getTimeStatusAllPkgs(hashTable, toTime)
+        # ----------------------------------------------------------
+
+        # Gets the status and details for 'x' package at 'x' time
+        elif option == "3":
             # ID
             try:
-                pID = int(input("Enter the ID of the package you want to know the status of (ex. 17): "))
+                pID = input(f"Enter the ID of the package you want to know the status of (1 - {numPackages}) (ex. 17): ")
+                pID = int(pID)
                 if pID <= 0:
                     raise ValueError
 
             except ValueError:
-                print(f"\nSorry, \"{pID}\" is not a valid ID.")
+                print(f"\nSorry, \"{pID}\" is not a valid ID (1 - {numPackages})")
                 continue
 
             # Time
             try:
-                userTime = input(f"For the status of package {pID}, please enter the time that you want to know for the"
-                                 f" package's status: (ex. \"14:00\"): ")
+                userTime = input(f"Enter the time at which you want to check the status for package {pID} "
+                                 f"(00:00 - 23:59) (e.g., \"14:35\"): ")
                 pTime = datetime.strptime(userTime, "%H:%M")  # Exception is thrown here
                 toTime = timedelta(hours=pTime.hour, minutes=pTime.minute)
 
             except ValueError:
-                print(f"\nSorry, \"{userTime}\" is not in a valid format (ex. \"14:00\").")
+                print(f"\nSorry, \"{userTime}\" is not a valid time (00:00 - 23:59) (ex. \"14:35\")")
                 continue
 
             # Get result
             getSinglePkgAtTime(hashTable, pID, toTime)
+        # ----------------------------------------------------------
 
-        elif option == "3":
-            try:
-                userTime = input("Enter the time for when you want to know the package statuses: (ex. \"14:00\"): ")
-                pTime = datetime.strptime(userTime, "%H:%M")  # Exception is thrown here
-                toTime = timedelta(hours=pTime.hour, minutes=pTime.minute)
-
-            except ValueError:
-                print(f"\nSorry, \"{userTime}\" is not in a valid format (ex. \"14:00\").")
-                continue
-
-            getTimeStatusAllPkgs(hashTable, toTime)
-
+        # Quit
         elif option == "4":
+            print("\nGoodbye! 😁")
             isExit = False
+        # ----------------------------------------------------------
 
         else:
             print(f"\nSorry, \"{option}\" is not a valid option.")
             continue
+# ----------------------------------------------------------
+
+
+"""
+Returns the number of packages in the hash table
+"""
+def getCountPackages(hashTable):
+    count = 0
+    for i in range(1, hashTable.count + 1):
+        count += 1
+
+    return count

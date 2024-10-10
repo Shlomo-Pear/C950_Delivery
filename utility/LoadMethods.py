@@ -1,18 +1,19 @@
 """
-The DistanceFile file holds methods that handles distance data.
+This module holds methods that reads data from .csv files and loads it into tables and lists.
 """
+
 import csv
 from model.Package import Package
+
 
 """
 Loads package data from a .csv file into a hash table
 """
 # Ref: WGU Webinar: Getting Greedy, who moved my data?; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=eee77a88-4de8-4d42-a3c3-ac8000ece256
-    # Loads the package data from a file into a hash table
 def loadPackageData(fileName, hashTable):
     with open(fileName) as packageFile:
         packageData = csv.reader(packageFile, delimiter=',')
-        next(packageData) # skips header
+        next(packageData)  # skips header
         for package in packageData:
             pID = int(package[0])
             pAddress = package[1]
@@ -29,13 +30,12 @@ def loadPackageData(fileName, hashTable):
 
             # insert it into the hash table
             hashTable.insert(pID, package)
-
+# ----------------------------------------------------------
 
 """
-Loads distance data from a .csv file into a list object
+Loads distance data from a .csv file into a 2D list.
 """
 # Ref: WGU Webinar: Getting Greedy, who moved my data?; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=eee77a88-4de8-4d42-a3c3-ac8000ece256
-# Loads the distance data from a file into 2D list
 def loadDistanceData(fileName):
     distanceArray = []
     count = 0
@@ -51,13 +51,13 @@ def loadDistanceData(fileName):
     # print(f"Total count of locations in distance file is: {count}")
     # print(distanceArray)
     return distanceArray
+# ----------------------------------------------------------
 
 
 """
-Loads address data from a .csv file into a list object
+Loads address data from a .csv file into a list.
 """
 # Ref: WGU Webinar: Getting Greedy, who moved my data?; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=eee77a88-4de8-4d42-a3c3-ac8000ece256
-# Loads the address data from a file into list
 def loadAddressData(fileName):
     addressArray = []
     count = 0
