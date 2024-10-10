@@ -16,7 +16,7 @@ from goMethods.Status import *
 from datetime import datetime
 
 
-def ui(hashTable):
+def ui(hashTable, truckList):
 
     # Loop until user is satisfied
     isExit = True
@@ -26,7 +26,7 @@ def ui(hashTable):
         numPackages = getCountPackages(hashTable)
         # ----------------------------------------------------------
         print("\nOptions:")
-        print("1. Get the Details for all Packages")
+        print("1. Get truck milage and the Details for all Packages")
         print("2. Get the status of all Packages at \'x\' Time (ex. \"14:35\")")
         print("3. Get the Status for Package \'x\' (ID) at \'x\' Time (ex. \"14:35\")")
         print("4. Exit the Program")
@@ -34,7 +34,7 @@ def ui(hashTable):
         # ----------------------------------------------------------
         # Gets the details for all packages
         if option == "1":
-            getAllPkgStatus(hashTable)
+            getAllPkgStatus(hashTable, truckList)
         # ----------------------------------------------------------
 
         # Gets the statuses and details for all packages at 'x' time

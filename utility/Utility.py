@@ -45,3 +45,22 @@ def setDepartureTime(currentTruck, previousTruck, potentialTime=timedelta()):
         currentTruck.timeLeftHub = previousTruck.timeAfterDelivery
     # Set the current time to the departure time
     currentTruck.timeAfterDelivery = currentTruck.timeLeftHub
+
+
+"""
+Gets the milage for each truck and the total milage
+"""
+def getTruckMiles(truckList):
+
+    totalMiles = 0.0
+
+    print("\nTruck Miles:")
+    for truck in truckList:  # Gets the milage for each truck
+        totalMiles += truck.miles
+        print(f"Truck {truck.ID} miles: {truck.miles:.2f}")
+
+    # Gets the total miles
+    print("-------------")
+    print(f"Total miles:   {totalMiles:.2f}")
+    print("----------------------")
+    # ----------------------------------------------------------

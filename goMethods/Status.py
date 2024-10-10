@@ -16,15 +16,19 @@ Possible statuses:
 
 from datetime import timedelta
 from model.Package import Package
+from utility.Utility import getTruckMiles
 
 """
 List the status of all packages. When printing package status, show all attributes of the package class and the truck
 that the package was assigned to.
 """
-def getAllPkgStatus(hashTable):
+def getAllPkgStatus(hashTable, truckList):
 
     correctPackage9(hashTable, timedelta(hours=10, minutes=20))
 
+    # Get truck milage
+    getTruckMiles(truckList)
+    
     # Search hash table for each package and print.
     print()
     print("Package Details")

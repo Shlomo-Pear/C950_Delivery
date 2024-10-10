@@ -37,7 +37,7 @@ def delivery():
 
     # Package IDs to load into trucks
     # Leaves at 8:00, Arrive by 10:30
-    list1 = [1, 13, 14, 16, 19, 20, 29, 30, 31, 34, 37, 40]
+    list1 = [1, 13, 14, 20, 29, 30, 31, 37, 40]
 
     # Leaves after 10:20, Correct address for package 9: “410 S State St., Salt Lake City, UT 84111”
     list2 = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 17, 18, 36, 38, 39]
@@ -64,7 +64,7 @@ def delivery():
     truck2 = Truck(ID=2)
     truck3 = Truck(ID=3)
 
-    truck1.packages.append(15)  # Needs to be dropped off before 9:00
+    truck1.packages.extend([15, 16, 19, 34])  # Needs to be dropped off before 9:00
     truck2.packages.extend(list2)
     truck3.packages.extend([6, 25])  # Arrives late (9:05), 10:30 deadline
     # ----------------------------------------------------------
@@ -106,21 +106,13 @@ def delivery():
     truckDeliverPackages(distanceList, addressList, truck2, hashTable)
     # ----------------------------------------------------------
 
-    # Test
-    totalMiles = truck1.miles + truck2.miles + truck3.miles
-    print("\nTruck Miles:")
-    print(f"Truck 1 miles: {truck1.miles:.2f}")
-    print(f"Truck 2 miles: {truck2.miles:.2f}")
-    print(f"Truck 3 miles: {truck3.miles:.2f}")
-    print(f"Total miles:   {totalMiles:.2f}")
-
     print(f"\nTruck operating times:")
     print(f"Truck 1: {truck1TLH1} - {truck1.timeAfterDelivery}")
     print(f"Truck 3: {truck3TLH1} - {truck3.timeAfterDelivery}")
     print(f"Truck 2: {truck2.timeLeftHub} - {truck2.timeAfterDelivery}")
-    # ----------------------------------------------------------
 
-    return hashTable  # For UI
+    truckList = [truck1, truck2, truck3]
+    return hashTable, truckList  # For UI
 
 
 """
@@ -170,3 +162,4 @@ def truckDeliverPackages(distanceList, addressList, truck, hashTable):
     # ----------------------------------------------------------
     # Return truck to hub
     truck.location = addressList[0]
+
