@@ -30,12 +30,6 @@ def correctPackage9(hashTable, originalPackage9, inputTime):
 
         # Time is before 10:20
     else:
-        # Update package details to NA
-        originalPackage9.truckNum = None
-        originalPackage9.departureTime = timedelta()
-        originalPackage9.deliveryTime = timedelta()
-        # print(hashTable.search(9))
-
         hashTable.insert(originalPackage9.ID, originalPackage9)
 
 # ------------------------------------------------------------------------------------------------------
