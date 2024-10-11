@@ -10,8 +10,8 @@ from model.Package import Package
 This method corrects package 9's data if the input time is after 10:20
 """
 def correctPackage9(hashTable, originalPackage9, inputTime):
-
     # Correct package 9's address     Feels kind of messy putting this method here
+    # (We need the original package 9 as a parameter since it stores the variable departure time and delivery time)
 
     # Time is after 10:20
     if inputTime >= timedelta(hours=10, minutes=20):
