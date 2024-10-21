@@ -1,5 +1,7 @@
 """
 This module holds methods that reads data from .csv files and loads it into tables and lists.
+
+Todo add time complexity
 """
 
 import csv

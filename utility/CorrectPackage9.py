@@ -9,30 +9,35 @@ from model.Package import Package
 """
 This method corrects package 9's data if the input time is after 10:20
 """
-def correctPackage9(hashTable, originalPackage9, inputTime):
-    # Correct package 9's address     Feels kind of messy putting this method here
-    # (We need the original package 9 as a parameter since it stores the variable departure time and delivery time)
+def correctPackage9(hashTable, inputTime):
+    # Correct package 9's address
+
+    # Get package 9 non-parameter details
+    deliveryDetails = hashTable.search(9)
+    departureTime = deliveryDetails.departureTime
+    deliveryTime = deliveryDetails.deliveryTime
+    truckNum = deliveryDetails.truckNum
 
     # Time is after 10:20
     if inputTime >= timedelta(hours=10, minutes=20):
         package9 = Package(9, "410 S State St", "Salt Lake City", "UT", "84111", "EOD",
                            2, "Wrong address listed; address corrected")
-        hashTable.insert(originalPackage9.ID, package9)
-
-        # Update package details
-        package9 = hashTable.search(9)
-        package9.truckNum = originalPackage9.truckNum
-        package9.departureTime = originalPackage9.departureTime
-        package9.deliveryTime = originalPackage9.deliveryTime
-        # print(hashTable.search(9))
+        hashTable.insert(package9.ID, package9)
 
     # ----------------------------------------------------------
 
         # Time is before 10:20
     else:
-        hashTable.insert(originalPackage9.ID, originalPackage9)
+        package9 = Package(9, "300 State St", "Salt Lake City", "UT", "84103", "EOD",
+                           2, "Wrong address listed")
+        hashTable.insert(package9.ID, package9)
 
 # ------------------------------------------------------------------------------------------------------
+
+    # Set non-parameter details
+    package9.truckNum = truckNum
+    package9.departureTime = departureTime
+    package9.deliveryTime = deliveryTime
 
 
 """

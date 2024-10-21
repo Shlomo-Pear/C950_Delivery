@@ -13,12 +13,12 @@ class Package:
         self.state = state
         self.zCode = zCode
         self.deadline = deadline
-        self.weight = weight
+        self.weight = float(weight)
         self.notes = notes
         self.truckNum = None
         self.departureTime = timedelta()
         self.deliveryTime = timedelta()
 
     def __str__(self):  # Overwrites print(Package). Otherwise, it will print out the object reference.
-        return f"{self.ID}, {self.address}, {self.city}, {self.state}, {self.zCode}, {self.deadline} deadline"
+        return f"{self.ID} | {self.address}, {self.city}, {self.state}, {self.zCode} | Weight: {self.weight} | {self.deadline} deadline"
 

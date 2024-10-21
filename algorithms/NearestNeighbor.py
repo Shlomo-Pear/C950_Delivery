@@ -1,11 +1,12 @@
 """
 This is the nearest neighbor algorithm that finds the next closest package.
 """
+from utility.LoadMethods import loadDistanceData, loadAddressData
 
 """
 Finds the next closest package and returns the ID, address, and the distance between it and the truck.
 """
-def getClosestPackage(hashTable, distanceData, addressList, truckPackages, startingAddress):
+def getClosestPackage(hashTable, truckPackages, startingAddress):
     # Initialize
     count = 0
     nextPackageID = -1
@@ -22,7 +23,7 @@ def getClosestPackage(hashTable, distanceData, addressList, truckPackages, start
         # print(f"Starting address: {startingAddress}, Address 2: {address2}")
         # ----------------------------------------------------------
 
-        distance = distanceBetween(distanceData, addressList, startingAddress, address2)
+        distance = distanceBetween(startingAddress, address2)
         # print(f"Testing distance: {distance}")
 
         # If the new distance is smaller, reassign variables
@@ -38,8 +39,19 @@ def getClosestPackage(hashTable, distanceData, addressList, truckPackages, start
 
 """
 Returns the distance between two locations.
+Complexity:
+Insertion: O(n)
+Access:    O(1)
 """
-def distanceBetween(distanceData, addressList, address1, address2):
+def distanceBetween(address1, address2):
+
+    # Distance data
+    distanceData = loadDistanceData("../resources/WGUPS Distance Table.csv")
+
+    # Address data
+    addressList = loadAddressData("../resources/WGUPS Address File.csv")
+    # print(addressList[0])
+    # ----------------------------------------------------------
 
     # Assign h and j
     # Skip Header if index is 0

@@ -21,9 +21,9 @@ from utility.CorrectPackage9 import *
 List the status of all packages. When printing package status, show all attributes of the package class and the truck
 that the package was assigned to.
 """
-def getAllPkgDetails(hashTable, truckList, originalPackage=None):
+def getAllPkgDetails(hashTable, truckList):
 
-    correctPackage9(hashTable, originalPackage, timedelta(hours=17, minutes=30))
+    correctPackage9(hashTable, timedelta(hours=17, minutes=30))
 
     # Get truck milage
     getTruckMiles(truckList)
@@ -36,7 +36,12 @@ def getAllPkgDetails(hashTable, truckList, originalPackage=None):
     # Search hash table for each package and print.
     for i in range(1, hashTable.count + 1):
         package = hashTable.search(i)
-        print(f"Package: {package}, Departed HUB At: {package.departureTime}, Delivered At: {package.deliveryTime}, Truck #{package.truckNum}")
+
+        departedAt = package.departureTime
+        deliveredAt = package.deliveryTime
+        truckNum = package.truckNum
+
+        print(f"Package: {package}, Departed HUB At: {departedAt}, Delivered At: {deliveredAt} | Truck #{truckNum}")
     print("------------------------------------------------------------------------------------------------------"
           "--------------------------------------------")
 # ------------------------------------------------------------------------------------------------------
@@ -45,10 +50,10 @@ def getAllPkgDetails(hashTable, truckList, originalPackage=None):
 """
 # List the status and details of all packages at 'x' time.
 """
-def getTimeStatusAllPkgs(hashTable, inputTime, originalPackage=None):
+def getTimeStatusAllPkgs(hashTable, inputTime):
 
     # Correct package 9's details
-    correctPackage9(hashTable, originalPackage, inputTime)
+    correctPackage9(hashTable, inputTime)
 
     # Search hash table for each package and print the status
 
@@ -65,7 +70,7 @@ def getTimeStatusAllPkgs(hashTable, inputTime, originalPackage=None):
         message = f"Package {package.ID}\'s status at \"{inputTime}\":"
 
         print(f"{message}      {status}")
-        print(f"   #{package}, Departed HUB At: {departureTime}, Delivered At: {deliveryTime}, Truck #{truckNum}")
+        print(f"   #{package}, Departed HUB At: {departureTime}, Delivered At: {deliveryTime} | Truck #{truckNum}")
         print("------------------------------------------------------------------------------------------------------"
               "--------------------------------------------")
 # ------------------------------------------------------------------------------------------------------
@@ -76,10 +81,10 @@ Prints out the status and package details for 'x' package at 'x' time
 """
 
 
-def getSinglePkgAtTime(hashTable, pID, inputTime, originalPackage=None):
+def getSinglePkgAtTime(hashTable, pID, inputTime):
 
     # Correct package 9's details
-    correctPackage9(hashTable, originalPackage, inputTime)
+    correctPackage9(hashTable, inputTime)
 
     try:
 
@@ -94,7 +99,7 @@ def getSinglePkgAtTime(hashTable, pID, inputTime, originalPackage=None):
         print(f"\nPackage {package.ID}\'s Status At \"{inputTime}\": {status}")
         print("------------------------------------------------------------------------------------------------------"
               "--------------------------------------------")
-        print(f"#{package}, Departed HUB At: {departureTime}, Delivered At: {deliveryTime}, Truck #{truckNum}")
+        print(f"#{package}, Departed HUB At: {departureTime}, Delivered At: {deliveryTime} | Truck #{truckNum}")
         print("------------------------------------------------------------------------------------------------------"
               "--------------------------------------------")
 

@@ -17,7 +17,7 @@ from datetime import datetime
 from utility.Utility import getCountPackages
 
 
-def ui(hashTable, truckList, originalPackage=None):
+def ui(hashTable, truckList):
 
     # Loop until user is satisfied
     isExit = True
@@ -26,18 +26,19 @@ def ui(hashTable, truckList, originalPackage=None):
         # Gets the number of packages in the hash table
         numPackages = getCountPackages(hashTable)
         # ----------------------------------------------------------
-
+        print("***********************************************************************")
         print("\nOptions:")
         print("1. Get Truck Milage and the Details for All Packages")
         print("2. Get the Status of All Packages At \'X\' Time (ex. \"14:35\")")
         print("3. Get the Status for Package \'X\' (ID) at \'X\' Time (ex. \"14:35\")")
         print("4. Exit the Program")
         option = input("Choose an option (1, 2, 3, or 4): ")
+        print("\n***********************************************************************")
         # ----------------------------------------------------------
 
         # Gets the details for all packages
         if option == "1":
-            getAllPkgDetails(hashTable, truckList, originalPackage)
+            getAllPkgDetails(hashTable, truckList)
         # ----------------------------------------------------------
 
         # Gets the statuses and details for all packages at 'x' time
@@ -52,7 +53,7 @@ def ui(hashTable, truckList, originalPackage=None):
                 print(f"\nSorry, \"{userTime}\" is not a valid time (00:00 - 23:59) (ex. \"14:35\")")
                 continue
 
-            getTimeStatusAllPkgs(hashTable, toTime, originalPackage)
+            getTimeStatusAllPkgs(hashTable, toTime)
         # ----------------------------------------------------------
 
         # Gets the status and details for 'x' package at 'x' time
@@ -80,7 +81,7 @@ def ui(hashTable, truckList, originalPackage=None):
                 continue
 
             # Get result
-            getSinglePkgAtTime(hashTable, pID, toTime, originalPackage)
+            getSinglePkgAtTime(hashTable, pID, toTime)
         # ----------------------------------------------------------
 
         # Quit

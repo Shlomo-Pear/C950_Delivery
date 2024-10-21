@@ -13,6 +13,9 @@ package ID as input and inserts each of the following data components into the h
 •   package weight
 •   delivery status (i.e., at the hub, en route, or delivered), including the delivery time
 
+
+I went with the chaining hash table because it handles collisions well by adding the new element behind the old one and
+does not require constant resizing. Additionally, the time complexity is low for such a small dataset.
 """
 
 
@@ -20,6 +23,10 @@ package ID as input and inserts each of the following data components into the h
 # Modified for Key:Value
 """
 HashTable class using chaining.
+Complexity:
+    Space: O(m + n)
+    Time : Avg = O(1) | Worst = O(n)
+    (m = # of buckets)
 """
 class ChainingHashTable:
 
@@ -39,6 +46,12 @@ class ChainingHashTable:
 
     """
     Inserts a new item into the hash table.
+    
+    
+    Complexity:
+    Space: O(m + n)
+    Time : Avg = O(1) | Worst = O(n)
+    (m = # of buckets)
     """
     def insert(self, key, item):  # does both insert and update
         # get the bucket list where the item will go.
@@ -63,6 +76,10 @@ class ChainingHashTable:
     """
     Searches for an item with matching key in the hash table.
     Returns the item if found, or None if not found.
+    
+    
+    Complexity:
+    Time : Avg = O(1) | Worst = O(n)
     """
     def search(self, key):
         # get the bucket list where this key would be.
@@ -84,6 +101,10 @@ class ChainingHashTable:
 
     """
     Removes an item with matching key from the hash table.
+    
+    
+    Complexity:
+    Time : Avg = O(1) | Worst = O(n)
     """
     def remove(self, key):
         # get the bucket list where this item will be removed from.
@@ -99,7 +120,11 @@ class ChainingHashTable:
     # ----------------------------------------------------------
 
     """
-    Method to fetch data from hash table by bucket
+    Method to fetch data from hash table by bucket.
+    
+    
+    Complexity:
+    Time : Avg = O(1) | Worst = O(n)
     """
     def getPackageData(self):
         for index, bucket in enumerate(self.table):
