@@ -15,7 +15,12 @@ from goMethods.UI import *
 if __name__ == '__main__':
     print("WGU Mail Routing System")
 
+    # Complexity:
+    # Space: O(n^2)
+    # Time: O(n)
     hashTable, truckList = delivery()
 
+    # Complexity:
+    # Space/Time: O(n)
     # Loop until user is satisfied
     ui(hashTable, truckList)

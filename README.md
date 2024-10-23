@@ -1,6 +1,7 @@
-# C950_Delivery
-This project describes a traveling sailsman problem. It handles the delivery of packages from a hub location to other
-locations by utilizing data structures and algorithms.
+# C950_Delivery User Guide 
+
+This project describes a traveling sailsman problem. It handles the delivery of packages from a hub location delivery
+addresses by utilizing data structures and algorithms.
 ___
 
 ## Scenario
@@ -97,8 +98,102 @@ NA.
 * Packages 3, 18, 36, and 38 must be delivered on truck 2.
 ___
 
-## Justification of Flow
+## Description of the Flow of the Code
 
 \
+In the main.py module, the program is split into two functions: one that handles the delivery, and the other that handles
+the user interface (UI). I felt this would make the code easier to read than have either function completely written out
+there.
 
-___
+The delivery function is the core of the project. It simulates the delivery of packages by truck over the course of the day
+and tracks the time the packages left the hub, their time of delivery, and which truck they were driven on. The milage
+of the trucks are also tracked.
+
+The UI presents the data to the user as described in the above Directions.  
+
+### Delivery
+
+#### ______________ _Truck Management_ ______________
+
+I start the function off by initializing a hash table and filling it with package data loaded in from a .csv file. I opted
+to use a chaining hash table as it handles collisions really well and there is no need to constantly resize it if it gets
+filled with lots of data, especially since it will only contain a very small amount of data (40 packages). That being said,
+the table scales well when lots of data is added. There are two ways I would resize the table if this happens: manually
+create another table with more buckets and fill it with the previous table's data and then empty the old one out, or create
+a resizing function. The function would have a check to see if the table's data is a percentage over an arbitrary amount,
+and if it is, it would create a new table within it with more buckets based off the square root of the total number of
+packages, fill it, then replace the old table with the new one.
+
+After this, I create lists of integers that correspond to the package IDs to fill three separate trucks that have a 
+capacity for 16 packages at a time. Since the algorithm I'm using will determine which package to deliver one at a time,
+it is simpler to search for a single one at a time there than to fill the lists with the package objects here. 
+
+Truck 1 starts off at 8:00 AM. It makes two trips: one to deliver packages that if not delivered first, will not be
+delivered on time/will prevent others from being delivered on time, and another to drop off the other packages with
+deadlines.
+
+Since truck 2 has to have certain packages on it that may be delivered by the end of the day (EOD), truck 3 goes next as
+some packages will arrive at the hub late but (two of them) will still have a deadline. Like truck one, truck 3 will make
+two trips to ensure the packages with deadlines are delivered on time. To ensure truck 2 does not exceed its carrying
+capacity, truck 3 delivers some packages with an EOD deadline.
+
+Truck 2 now delivers the remaining packages. Another reason why truck 2 goes last is because package 9's deadline is at
+EOD, but the wrong address is listed for it and the correct address won't arrive until 10:20 AM. 
+
+The directions allow for two trucks to run in parallel, but it was much easier to implement the trucks delivering the
+packages in sequence. 
+
+Finally, I print out the truck operating times. Although I'm not required to do so, I left it in since I found it helpful
+for determining if packages with deadlines made it on time and I felt that the user will also find it helpful.
+
+#### ________________ _Tracking Time_ ________________
+
+The trucks have two attributes for tracking time: `timeLeftHub`, and `timeAfterDelivery`. The former is a timestamp which is
+copied to a package's `timeLeftHub` attribute (which tracks its location) and is also used to determine the trucks'
+operating times, while the latter determines the time the trucks leave the hub and at what time each package was delivered.
+
+To ensure truck 3 doesn't leave before its packages arrive and truck 2 doesn't go before package 9's updated address comes,
+I wrote a function that sets the departure time by comparing the time the last truck got back (the current time) to the
+time the packages/details arrive at the hub (i.e. 9:05 or 10:20). if the current time is after they arrive, then the next
+truck is fine to leave. Otherwise, it should wait to depart until then.
+
+#### _______________ _Package Delivery_ _______________
+
+There is a three part process to deliver the packages. The first part determines the next package the truck will deliver (1),
+the second one tracks the time and the truck's milage (2), and the third part updates the package's details and removes the
+package from the truck (3).
+
+**1)** 
+To determine this, I'm applying the nearest-neighbor algorithm. A for-loop iterates through the truck's list of package
+IDs. Within each loop, the corresponding package is retrieved from the hashtable and the distance between the package's
+destination and the hub/the previously delivered package's destination (the truck's current location) is retrieved from
+a distance table This is then compared against a previously recorded distance (infinity to start with). If this one's
+smaller, overwrite the package ID, the address, and the distance. Once all the IDs in the list are iterated through,
+return the ID, address, and distance of the next closest address.
+
+To get the correct distance, the index for the current location and the potential destination is first
+      retrieved from a separate address table and is crossed-referenced in the distance table. If the index is '0' (the first
+      index), the index will correspond to an address, not the distance between the two addresses, so in such a case '1' will
+      need to be added to it so an error is not thrown. I can't just add '1' in all cases, since another error for going over
+      the height/width will be thrown. (I bet there's a smarter/right way to go about this, but I can't think of it ¯\\\_(ツ)\_/¯.)
+      Additionally, there are three kinds of checks to find the distance that pretty much boil down to if the distance is '0',
+      if there is no distance data, or if there _is_ data. If it's the middle, then search from the opposite address
+      (`distanceData[h][j]` → `distanceData[j][h]`). 
+
+**2)** 
+To determine the time the truck drove for, we use the function `time = distance / speed`. The distance was just determined,
+and we also have the speed - 18 (See Assumptions above). We add this time to the truck's `timeAfterDelivery` attribute, which
+starts off at the time the truck left the hub. We also add the distance to the truck's miles attribute.
+
+**3)**
+There are three package attributes that are updated: `truckNum`, `departureTime`, and `deliveryTime`. I think they are
+pretty self-explanatory. Finally, the package is removed from the truck's package list. 
+
+The process continues until there are no more packages remaining in the list.
+
+### UI
+
+
+
+
+_________

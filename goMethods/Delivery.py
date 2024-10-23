@@ -16,6 +16,9 @@ This method handles the setup and execution of the project.
 It creates and fills a hash table with packages, fills trucks, and directs the truck departure order.
 Called in main.py.
 
+Complexity:
+Space: O(n^2)
+Time: O(n)
 
 This method is the core of the project. It has two main parts: Initialization/setup, and the activation of the trucks
 leaving the hub to deliver the packages. I also included the operating times of the trucks because I think that's
@@ -34,9 +37,9 @@ user puts in, it will be called in the status module (which calls correctedPacka
 def delivery():
 
     # Initialize hashtable, distance list, and address list
+    # Complexity:   Space: O(m + n) | Time: O(n)      (m =  # of buckets)
     hashTable = ChainingHashTable()
     loadPackageData("../resources/WGUPS Package File.csv", hashTable)
-    # hashTable.getPackageData()
 
     # Test Check hashtable for all packages
     # hashTable.getPackageData()
@@ -64,7 +67,7 @@ def delivery():
 
     # list of IDs for packages that have to be on truck 2
     truck2List = [3, 18, 36, 38]
-    truck2AddOns = [5, 9]
+    truck2AddOns = [5, 9]  # Unfinished
 
     # list of IDs for packages with end of day delivery
     eodDelivery = [2, 4, 5, 7, 8, 9, 10, 11, 12, 17, 19, 21, 22, 23, 24, 26, 27, 29, 33, 35, 39]
@@ -73,23 +76,25 @@ def delivery():
     truck2 = Truck(ID=2)
     truck3 = Truck(ID=3)
 
-    truck1.packages.extend([15, 16, 19, 34])  # Needs to be dropped off before 9:00
-    truck2.packages.extend(list2)
-    truck3.packages.extend([6, 25])  # Arrives late (9:05), 10:30 deadline
+    truck1.packages.extend([15, 16, 19, 34])  # 15 needs to be dropped off before 9:00. The others are on the way.
+                                                                # Otherwise, the packages won't make the deadline.
+    truck2.packages.extend(list2)  # These packages deadlines are all end of day.
+    truck3.packages.extend([6, 25])  # Arrives late (9:05), 10:30 deadline, so they have to be delivered first.
     # ----------------------------------------------------------
-    # Trucks depart the HUB one at a time and drops off packages.
+    # Trucks depart the HUB one at a time and drops off packages. It was way too complicated to have trucks run in
+    # parallel and track the time at the same time.
 
     # Truck 1 Leaves at 8:00
     truck1.timeLeftHub = timedelta(hours=8)
     truck1.timeAfterDelivery = truck1.timeLeftHub
-    truckDeliverPackages(hashTable, truck1)
+    truckDeliverPackages(hashTable, truck1)  # Complexity: Space: O(n^2) Time: O(n)
 
-    truck1TLH1 = truck1.timeLeftHub
+    truck1TLH1 = truck1.timeLeftHub  # For tracking truck operating hours.
 
-    # Reload Truck
+    # Reload Truck  # Space: O(n)
     truck1.packages.extend(list1)
-    setDepartureTime(truck1, truck1)
-    truckDeliverPackages(hashTable, truck1)
+    setDepartureTime(truck1, truck1)  # Time: O(1)
+    truckDeliverPackages(hashTable, truck1)  # Complexity: Space: O(n^2) Time: O(n)
     # ----------------------------------------------------------
 
     # Truck 3 before 2
@@ -98,7 +103,7 @@ def delivery():
     setDepartureTime(truck3, truck1, qTimeLeave)
     truckDeliverPackages(hashTable, truck3)
 
-    truck3TLH1 = truck3.timeLeftHub
+    truck3TLH1 = truck3.timeLeftHub  # For tracking truck operating hours.
 
     # Reload Truck
     truck3.packages.extend(list3)
@@ -120,6 +125,7 @@ def delivery():
     truckDeliverPackages(hashTable, truck2)
     # ----------------------------------------------------------
 
+    # I found this helpful for determining if packages with deadlines made it on time. I might as well leave it in for others.
     print("\n-----------------------------")
     print(f"  Truck operating times:")
     print(f"Truck 1: {truck1TLH1}  - {truck1.timeAfterDelivery}")
@@ -127,13 +133,17 @@ def delivery():
     print(f"Truck 2: {truck2.timeLeftHub} - {truck2.timeAfterDelivery}")
     print("-----------------------------")
 
-    truckList = [truck1, truck2, truck3]
+    truckList = [truck1, truck2, truck3]  # For tracking milage
     return hashTable, truckList
 
 
 """
 determines the next package to deliver, tracks truck milage and time, drops off each package, and updates package details.
 called in Delivery.py.
+
+Complexity:
+Space: O(n^2)
+Time: O(n)
 """
 def truckDeliverPackages(hashTable, truck):
 
@@ -142,9 +152,9 @@ def truckDeliverPackages(hashTable, truck):
     nextAddress = addressList[0]
 
     # Drop off packages
-    while len(truck.packages) > 0:
+    while len(truck.packages) > 0:  # Complexity: O(n)
 
-        # Gets the closest package
+        # Gets the closest package (Nearest neighbor algorithm) Space: 0(n^2) Time: O(n)
         nextPackageID, address, distanceToNext = getClosestPackage(hashTable, truck.packages, nextAddress)
 
         nextAddress = address  # Updates the next address to the package delivery location
@@ -154,14 +164,13 @@ def truckDeliverPackages(hashTable, truck):
 
         # Get time from truck and amount of time driven and update truck time
         truckTime = truck.timeAfterDelivery
-        driveTime = getTravelTime(distanceToNext)
+        driveTime = getTravelTime(distanceToNext)  # O(1)
         deliveredAt = truckTime + driveTime
         # ----
         truck.timeAfterDelivery = deliveredAt
 
-        # Debug
-        # print(f"Package ID: {nextPackageID}, Address: {address}, Distance: {distanceToNext}, "
-        #      f"Delivered At: {deliveredAt}")
+        # Debug print(f"Package ID: {nextPackageID}, Address: {address}, Distance: {distanceToNext}, Delivered At: {
+        # deliveredAt}")
 
         # ----------------------------------------------------------
 

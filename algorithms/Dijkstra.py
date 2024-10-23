@@ -1,7 +1,7 @@
 """
 Dijkstra's Shortest Path Algorithm
 
-Abandoned
+Abandoned for Nearest Neighbor. Too complicated for me at my current education in a timely manner.
 """
 
 

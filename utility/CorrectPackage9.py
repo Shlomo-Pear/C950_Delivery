@@ -8,6 +8,10 @@ from model.Package import Package
 
 """
 This method corrects package 9's data if the input time is after 10:20
+Used in Status.py.
+
+Complexity:
+Time: O(1)
 """
 def correctPackage9(hashTable, inputTime):
     # Correct package 9's address
@@ -42,6 +46,11 @@ def correctPackage9(hashTable, inputTime):
 
 """
 Sets the status for package 9.
+Used in status() in Utility.py
+*Not needed. opted to put this directly inside ^.
+
+Complexity:
+Space/Time: O(1)
 """
 def setPackage9Status(inputTime):
 

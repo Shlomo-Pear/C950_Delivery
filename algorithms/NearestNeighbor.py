@@ -5,25 +5,27 @@ from utility.LoadMethods import loadDistanceData, loadAddressData
 
 """
 Finds the next closest package and returns the ID, address, and the distance between it and the truck.
+
+Space/Time Complexity = O(n^2)
 """
 def getClosestPackage(hashTable, truckPackages, startingAddress):
     # Initialize
-    count = 0
+    count = 0  # For bug testing
     nextPackageID = -1
     minDistance = float('inf')
 
     # Search the hash table for the package's address and get the distance between truck and package
+    # Complexity: Time: O(n)
     for i in truckPackages:
         count += 1
         package = hashTable.search(i)
         address2 = [package.address]
 
         # Print debug information
-        # print(f"{count})")
-        # print(f"Starting address: {startingAddress}, Address 2: {address2}")
+        # print(f"{count}\nStarting address: {startingAddress}, Address 2: {address2}")
         # ----------------------------------------------------------
 
-        distance = distanceBetween(startingAddress, address2)
+        distance = distanceBetween(startingAddress, address2)  # Space/Time Complexity = O(n^2)
         # print(f"Testing distance: {distance}")
 
         # If the new distance is smaller, reassign variables
@@ -40,7 +42,7 @@ def getClosestPackage(hashTable, truckPackages, startingAddress):
 """
 Returns the distance between two locations.
 Complexity:
-Insertion: O(n)
+Insertion: O(n^2)
 Access:    O(1)
 """
 def distanceBetween(address1, address2):
@@ -54,7 +56,7 @@ def distanceBetween(address1, address2):
     # ----------------------------------------------------------
 
     # Assign h and j
-    # Skip Header if index is 0
+    # Skip Header if index is 0 (0 = row/column header)
     h = addressList.index(address1)
     if h == 0:
         h += 1

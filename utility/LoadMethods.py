@@ -1,7 +1,5 @@
 """
 This module holds methods that reads data from .csv files and loads it into tables and lists.
-
-Todo add time complexity
 """
 
 import csv
@@ -10,6 +8,11 @@ from model.Package import Package
 
 """
 Loads package data from a .csv file into a hash table
+
+Complexity:
+    Space: O(m + n)
+    Time : O(n)
+    (m = # of buckets)
 """
 # Ref: WGU Webinar: Getting Greedy, who moved my data?; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=eee77a88-4de8-4d42-a3c3-ac8000ece256
 def loadPackageData(fileName, hashTable):
@@ -34,8 +37,13 @@ def loadPackageData(fileName, hashTable):
             hashTable.insert(pID, package)
 # ----------------------------------------------------------
 
+
 """
 Loads distance data from a .csv file into a 2D list.
+
+Complexity:
+    Space: O(m * n)
+    Time : O(n)
 """
 # Ref: WGU Webinar: Getting Greedy, who moved my data?; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=eee77a88-4de8-4d42-a3c3-ac8000ece256
 def loadDistanceData(fileName):
@@ -58,6 +66,10 @@ def loadDistanceData(fileName):
 
 """
 Loads address data from a .csv file into a list.
+
+Complexity:
+    Space: O(n)
+    Time : O(n)
 """
 # Ref: WGU Webinar: Getting Greedy, who moved my data?; https://wgu.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=eee77a88-4de8-4d42-a3c3-ac8000ece256
 def loadAddressData(fileName):

@@ -1,22 +1,24 @@
 """
 This module holds the UI.
+"""
+from goMethods.Status import *
+from datetime import datetime
 
 
-For the user interface, three (3) interface options are required:
+"""
+User Interface
+Three (3) interface options are required:
 
-1)   List the status of all packages.  When printing package status, show all attributes of the package class and the
-truck that the package was assigned to.
+1)   List the status of all packages. When printing package status, show all attributes of the package class (excluding
+        notes) and the truck that the package was assigned to.
 
 2)   Request a specific package id and a time to show the status of the package at that time
 
 3)   List the status of all packages – at a specific time
 
+Complexity:
+Space/Time: O(n)
 """
-from goMethods.Status import *
-from datetime import datetime
-from utility.Utility import getCountPackages
-
-
 def ui(hashTable, truckList):
 
     # Loop until user is satisfied
@@ -24,7 +26,8 @@ def ui(hashTable, truckList):
     while isExit:
 
         # Gets the number of packages in the hash table
-        numPackages = getCountPackages(hashTable)
+        # numPackages = getCountPackages(hashTable)  # O(n) Not needed. If used, import from ../utility/Utility.py
+        numPackages = hashTable.count  # O(1)
         # ----------------------------------------------------------
         print("***********************************************************************")
         print("\nOptions:")
@@ -38,7 +41,7 @@ def ui(hashTable, truckList):
 
         # Gets the details for all packages
         if option == "1":
-            getAllPkgDetails(hashTable, truckList)
+            getAllPkgDetails(hashTable, truckList)  # Time: O(n)
         # ----------------------------------------------------------
 
         # Gets the statuses and details for all packages at 'x' time
@@ -53,7 +56,7 @@ def ui(hashTable, truckList):
                 print(f"\nSorry, \"{userTime}\" is not a valid time (00:00 - 23:59) (ex. \"14:35\")")
                 continue
 
-            getTimeStatusAllPkgs(hashTable, toTime)
+            getTimeStatusAllPkgs(hashTable, toTime)  # Space/Time: O(n)
         # ----------------------------------------------------------
 
         # Gets the status and details for 'x' package at 'x' time
@@ -81,7 +84,7 @@ def ui(hashTable, truckList):
                 continue
 
             # Get result
-            getSinglePkgAtTime(hashTable, pID, toTime)
+            getSinglePkgAtTime(hashTable, pID, toTime)  # Space/Time: O(n)
         # ----------------------------------------------------------
 
         # Quit
