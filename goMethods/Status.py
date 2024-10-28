@@ -29,7 +29,7 @@ def getAllPkgDetails(hashTable, truckList):
     correctPackage9(hashTable, timedelta(hours=23, minutes=59))  # Time: O(1)
 
     # Get truck milage
-    getTruckMiles(truckList)  # Time: O(1)
+    getTruckMiles(truckList)  # Time: O(n)
 
     print()
     print("Package Details")
