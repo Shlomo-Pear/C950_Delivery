@@ -44,6 +44,7 @@ Returns the distance between two locations.
 Complexity:
 Insertion: O(n^2)
 Access:    O(1)
+* Time will be O(n^2) since the list is created everytime the function is called.
 """
 def distanceBetween(address1, address2):
 
