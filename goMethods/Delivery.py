@@ -18,7 +18,7 @@ Called in main.py.
 
 Complexity:
 Space: O(n^2)
-Time: O(n)
+Time: O(n^2)
 
 This method is the core of the project. It has two main parts: Initialization/setup, and the activation of the trucks
 leaving the hub to deliver the packages. I also included the operating times of the trucks because I think that's

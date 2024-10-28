@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     # Complexity:
     # Space: O(n^2)
-    # Time: O(n)
+    # Time: O(n^2)
     hashTable, truckList = delivery()
 
     # Complexity:
