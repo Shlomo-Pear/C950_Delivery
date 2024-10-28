@@ -175,7 +175,7 @@ To get the correct distance, the index for the current location and the potentia
       retrieved from a separate address table and is crossed-referenced in the distance table. If the index is '0' (the first
       index), the index will correspond to an address, not the distance between the two addresses, so in such a case '1' will
       need to be added to it so an error is not thrown. I can't just add '1' in all cases, since another error for going over
-      the height/width will be thrown. (I bet there's a smarter/right way to go about this, but I can't think of it ¯\\\_(ツ)\_/¯.)
+      the height/width will be thrown. (I bet there's a smarter/right way to go about this, but I can't think of it ¯\_(ツ)_/¯.)
       Additionally, there are three kinds of checks to find the distance that pretty much boil down to if the distance is '0',
       if there is no distance data, or if there _is_ data. If it's the middle, then search from the opposite address
       (`distanceData[h][j]` → `distanceData[j][h]`). 
@@ -193,7 +193,26 @@ The process continues until there are no more packages remaining in the list.
 
 ### UI
 
+The first thing in the UI is the options menu, as described in the Directions above. The first option links to the
+`Status.py` module, `getAllPkgDetails`. It first prints out the milage for each truck and the total for all of them from a
+truck list. The second thing it does is search through the hash table and prints out the details for each package. Before
+the function outputs anything, though, it ensures that package 9's details are set for after the address was changed and
+the package was delivered.
 
+Options 2 (`getTimeStatusAllPkgs`) and 3 (`getSinglePkgAtTime`), though, change the details for package 9, and really all
+packages, depending on the time the user inputted. `getStatus` compares the time against the (current) package time details
+and returns the `status`, `departureTime`, `deliveryTime`, and `truckNum`. So for example, if the time is less than the
+package departure time (if the package has not yet left the hub), than the package `status` is 'AT HUB' and the `departureTime`,
+`deliveryTime`, and `truckNum` is set to 'NA'. If the package is package 9 and the inputted time is before the time the
+new address for it arrives (10:20), then the package doesn't leave the hub and the status reflects that. The last thing
+`getStatus` checks is if the package ID has a match from within a list of Package IDs that come late to the hub. If the 
+ID is there and the package didn't arrive at the hub yet, then the package will have a unique `status` ('EN ROUTE TO HUB').
 
+Back in the UI, options 2 and 3 will attempt to parse the user input into a `timedelta` object. if it can't, a `ValueError`
+exception will be thrown and the user will be redirected back to the options' menu. The same thing will happen for option
+3 if the user inputs something other than a positive integer for the package ID prompt. If the user enters an ID that's 
+not in the database, an `IndexError` exception is raised within the `search` function of the hash table and a message is
+displayed.
 
-_________
+With the final option in the UI, the user may exit the program.
+___
