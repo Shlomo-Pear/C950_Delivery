@@ -1,7 +1,7 @@
 # C950_Delivery User Guide 
 
-This project describes a traveling sailsman problem. It handles the delivery of packages from a hub location delivery
-addresses by utilizing data structures and algorithms.
+This project describes a traveling sailsman problem. It handles the delivery of packages from a hub location to each package's
+destination by utilizing data structures and algorithms.
 ___
 
 ## Scenario
